@@ -1,0 +1,38 @@
+header {
+    height: 100px;
+    background-color: teal;
+}
+
+h1 {
+    color: white;
+}
+
+h2 {
+    color: white;
+}
+
+.project-btn>i {
+    color: white;
+    font-size: 18px;
+}
+
+.project-btn {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.project-btn:hover {
+    color: white;
+    font-weight: bold;
+}
+
+main {
+    background-color: white;
+}
+
+
+#sidebar {
+    min-height: calc(100vh - 100px);
+    background-color: cadetblue;
+}

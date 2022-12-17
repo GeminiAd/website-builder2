@@ -1,0 +1,147 @@
+.hero_section {
+	display: flex;
+	flex-direction: column;
+	overflow: none;
+	/* background-color: black; */
+
+	position: relative;
+	background: url('../asset/Images/heroImg.jpg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: calc(100vh - 260px) !important;
+
+	justify-content: center;
+}
+
+/*
+/* 
+.hero_img {
+	position: relative;
+	z-index: 0;
+	max-width: 100%;
+	max-height: 100vh;	
+} */
+
+.hero_content {
+	/* max-height: 100%; */
+	/* width: 100%; */
+	/* margin-right: 20px; */
+}
+
+.hero_content_background {
+	background-color: rgba(0, 0, 0, 0.485);
+	border-radius: 10px;
+	/* padding: 60px; */
+	max-height: 100%;
+}
+
+.hero_content_background>a {
+	width: fit-content;
+}
+
+.hero_content h1 {
+	color: var(--main-font);
+	font-weight: bolder;
+	font-size: 70px;
+	/* padding-right: 60%; */
+	width: fit-content;
+}
+
+.hero_content h2 {
+	color: var(--main-font);
+	font-weight: bolder;
+	align-self: right;
+	font-size: 50px;
+	/* padding-right: 60%; */
+	margin: 35px 0px;
+	width: 75%;
+}
+
+.hero_content button {
+	align-self: right;
+	padding: 10px;
+	font-size: 30px;
+	border-radius: 0.5em;
+	background-color: #36441d;
+	color: var(--main-font);
+	font-weight: bolder;
+}
+
+.hero_content button:hover,
+.hero_content button:focus {
+	box-shadow: 2px 2px 2px 2px var(--main-background-color);
+	transform: translateY(-0.25em);
+}
+
+@media screen and (max-width: 1234px) {
+	/* .hero_content_background {
+		width: 65% !important;
+	} */
+
+	.hero_content h1 {
+		font-size: 45px;
+	}
+
+	.hero_content h2 {
+		font-size: 35px;
+	}
+}
+
+@media screen and (max-width: 968px) {
+	/* .hero_content_background {
+		width: 100% !important;
+	} */
+
+	.hero_content h1 {
+		font-size: 30px;
+	}
+
+	.hero_content h2 {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 744px) {
+
+
+	.hero_content h1 {
+		font-size: 30px;
+	}
+
+	.hero_content h2 {
+		font-size: 20px;
+	}
+
+	.hero_content button {
+		align-self: right;
+		padding: 10px;
+		font-size: 20px;
+		border-radius: 0.5em;
+		/* background-color: var(--highlight-color);
+		color: var(--header-footer-color); */
+		font-weight: bolder;
+	}
+}
+
+@media screen and (max-width: 504px) {
+	.hero_content h1 {
+		font-size: 25px;
+	}
+
+	.hero_content h2 {
+		font-size: 16px;
+	}
+
+	.hero_content button {
+		padding: 8px;
+		font-size: 12px;
+	}
+}
+
+@media screen and (max-width: 390px) {
+	.hero_content h2 {
+		margin: 10px 0px;
+	}
+}
