@@ -2,7 +2,7 @@
   "name": "website-builder",
   "version": "0.1.0",
   "engines": {
-    "node": "16.17.1"
+    "node": "16.x"
   },
   "private": true,
   "proxy": "http://localhost:3001",

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "16.17.1"
+    "node": "16.x"
   },
   "main": "server/server.js",
   "scripts": {
@@ -14,7 +14,6 @@
     "build": "cd client && npm run build",
     "heroku-postbuild": "cd client && npm run build --prod"
   },
-  
   "author": "",
   "license": "ISC",
   "devDependencies": {
