@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useDrag, useDrop, useDragDropManager } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 import { ItemTypes } from './ItemTypes'
 import { Resizable } from 'react-resizable';
 
@@ -11,27 +11,26 @@ import EditableBody from './EditableBody';
 import EditableBodyText from './EditableBodyText'
 import EditableImage from './EditableImage';
 
-export default function Card({ id, cards, setCards }) {
+export default function Card({ id, cards, setCards, preview }) {
     const [iconVisibility, setIconVisibility] = useState(false);
     const [iconBackground, setIconBackground] = useState(`rgba(0, 0, 0, 0)`);
+    const [cursor, setCursor] = useState('move');
 
-    const { top, left, width, height } = cards[id];
-
-    const canDrag = useRef(true);
+    const { width, height } = cards[id];
 
     const styles = {
         div: {
-            position: 'absolute',
-            top: top,
-            left: left
+            // position: 'absolute',
+            // top: top,
+            // left: left
         },
         card: {
             minWidth: width,
             minHeight: height,
+            lineHeight: 'normal',
+            cursor: cursor,
         }
     };
-
-    const type = ItemTypes.CARD;
 
     const { header } = cards[id];
 
@@ -70,7 +69,6 @@ export default function Card({ id, cards, setCards }) {
     }
 
     const onMouseOver = (e) => {
-        canDrag.current = !e.target.matches('.react-resizable-handle');
         setIconVisibility(true);
     };
 
@@ -81,32 +79,6 @@ export default function Card({ id, cards, setCards }) {
     const onMouseIconLeave = (e) => {
         setIconBackground(`rgba(0, 0, 0, 0)`);
     }
-
-    const [{ isDragging }, drag] = useDrag(() => ({
-        type: type,
-        item: (monitor) => {
-            return {
-                id,
-                top,
-                left,
-                type,
-                xOffset: monitor.getInitialClientOffset().x - monitor.getInitialSourceClientOffset().x,
-                yOffset: monitor.getInitialClientOffset().y - monitor.getInitialSourceClientOffset().y
-            }
-        },
-        canDrag: (monitor) => {
-            return canDrag.current;
-        },
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult();
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-            handlerId: monitor.getHandlerId(),
-        }),
-    }),
-        [id, top, left, width, height]
-    )
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
@@ -146,10 +118,6 @@ export default function Card({ id, cards, setCards }) {
         }
     }
 
-    if (isDragging) {
-        return <div ref={drag}></div>
-    }
-
     return (
         <Resizable
             height={height}
@@ -157,10 +125,10 @@ export default function Card({ id, cards, setCards }) {
             onResize={onResize}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
+            role={preview ? 'CardPreview' : 'Card'}
         >
             <div ref={drop} style={styles.div}>
                 <div
-                    ref={drag}
                     className="card text-center"
                     style={styles.card}
                 >

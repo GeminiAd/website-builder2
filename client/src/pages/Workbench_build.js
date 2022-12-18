@@ -17,10 +17,11 @@ import { scale } from '@cloudinary/transformation-builder-sdk/actions/resize';
 import "../styles/Workbench_build.css";
 
 import { PopoverPicker } from "../components/PopoverPicker";
-import CardComponent from '../components/CardComponent';
+import DraggableCardComponent from '../components/DraggableCardComponent';
 import ImageComponent from '../components/ImageComponent';
 import Dustbin from '../components/Dustbin';
 import { ItemTypes } from '../components/ItemTypes';
+import { CustomDragLayer } from '../components/CustomDragLayer';
 
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -475,9 +476,9 @@ const WRK = () => {
 
 
 	const navSubmit = async (e) => {
-		for(let i = 0 ;i<codeCompileArr.length;i++){
-			if(codeCompileArr[i].contentTitle === 'navbar'){
-				codeCompileArr.splice(i,1)
+		for (let i = 0; i < codeCompileArr.length; i++) {
+			if (codeCompileArr[i].contentTitle === 'navbar') {
+				codeCompileArr.splice(i, 1)
 			}
 		}
 		e.preventDefault();
@@ -538,9 +539,9 @@ const WRK = () => {
 	};
 
 	const mainSubmit = async (e) => {
-		for(let i = 0 ;i<codeCompileArr.length;i++){
-			if(codeCompileArr[i].contentTitle === 'body'){
-				codeCompileArr.splice(i,1)
+		for (let i = 0; i < codeCompileArr.length; i++) {
+			if (codeCompileArr[i].contentTitle === 'body') {
+				codeCompileArr.splice(i, 1)
 			}
 		}
 		e.preventDefault();
@@ -638,20 +639,20 @@ const WRK = () => {
 			);
 			mainHeader.textContent = navMainObj.mainTitle;
 			let Aside
-			if(navMainObj.aside === 'Yes'){
+			if (navMainObj.aside === 'Yes') {
 				Aside = document.createElement("div");
 				let AsideTitle = document.createElement("h2");
 				let AsideContent = document.createElement("p");
 				let asideColor
 				let pop
-				if(navMainObj.asideContent.asideGrad === 'Yes'){
+				if (navMainObj.asideContent.asideGrad === 'Yes') {
 					asideColor = `background-image: linear-gradient(to bottom right,${navMainObj.asideContent.asideBackCol}, ${navMainObj.asideContent.asidebackColGrad})`
-				}else{
+				} else {
 					asideColor = `background-color:${navMainObj.asideContent.asideBackCol}`
 				}
-				if(navMainObj.asideContent.asidePop === 'Pop'){
+				if (navMainObj.asideContent.asidePop === 'Pop') {
 					pop = 'margin: 3px; box-shadow: 2px 0px 20px'
-				}else{
+				} else {
 					pop = ''
 				}
 
@@ -692,11 +693,11 @@ const WRK = () => {
 				 height:100vh;
 				 width: 100%;`
 			)
-			if(navMainObj.aside === 'Yes'){
-				if(navMainObj.asideDir === 'Left'){
+			if (navMainObj.aside === 'Yes') {
+				if (navMainObj.asideDir === 'Left') {
 					content.append(Aside)
 					content.append(mainContent)
-				}else{
+				} else {
 					content.append(mainContent)
 					content.append(Aside)
 				}
@@ -710,9 +711,9 @@ const WRK = () => {
 	};
 
 	const footerSubmit = async (e) => {
-		for(let i = 0 ;i<codeCompileArr.length;i++){
-			if(codeCompileArr[i].contentTitle === 'footer'){
-				codeCompileArr.splice(i,1)
+		for (let i = 0; i < codeCompileArr.length; i++) {
+			if (codeCompileArr[i].contentTitle === 'footer') {
+				codeCompileArr.splice(i, 1)
 			}
 		}
 		e.preventDefault();
@@ -894,21 +895,21 @@ const WRK = () => {
 								<div style={flair.addNavBarColor} className="col-12 inner-container">
 
 									<div className="row">
-								
+
 										<label className="col-7 labelText">"Yes" for gradient, "No" for solid background color: </label>
 										<button className="col-4 btn btn-primary" id="navGrad" onClick={navgrad}>
 											No
 										</button>
-										</div>
-										<div className="d-flex justify-content-between">
-											<label className="labelText">Select background color: </label>
-											{<PopoverPicker color={color} onChange={setColor} />}
-										</div>
-										<div className="d-flex justify-content-between">
-											<label className="labelText">Select background color: </label>
-											{<PopoverPicker color={colorGrad} onChange={setColorGrad} />}
-										</div>
-									
+									</div>
+									<div className="d-flex justify-content-between">
+										<label className="labelText">Select background color: </label>
+										{<PopoverPicker color={color} onChange={setColor} />}
+									</div>
+									<div className="d-flex justify-content-between">
+										<label className="labelText">Select background color: </label>
+										{<PopoverPicker color={colorGrad} onChange={setColorGrad} />}
+									</div>
+
 
 									<hr className="navBenchBreak"></hr>
 
@@ -1087,7 +1088,7 @@ const WRK = () => {
 							</button>
 							{visibilityComp ? (
 								<div style={flair.componentBar} className="inner-container">
-									<CardComponent />
+									<DraggableCardComponent />
 									<ImageComponent />
 								</div>
 							) : (
@@ -1576,8 +1577,11 @@ const WRK = () => {
 					</aside>
 					<main
 						className="col-9 wrk-concept-container" style={{ padding: '0px' }}>
-
 						<Dustbin
+							cards={cards}
+							setCards={setCards}
+						/>
+						<CustomDragLayer
 							cards={cards}
 							setCards={setCards}
 						/>
@@ -1585,7 +1589,6 @@ const WRK = () => {
 				</div>
 			</div>
 		</React.Fragment>
-
 
 	);
 };

@@ -2,67 +2,41 @@ import React, { useRef } from 'react'
 import { useDrag } from 'react-dnd'
 import { ItemTypes } from './ItemTypes'
 
-import { useDragDropManager } from 'react-dnd'
-
-// const style = {
-//     border: '1px dashed gray',
-//     backgroundColor: 'white',
-//     padding: '0.5rem 1rem',
-//     marginRight: '1.5rem',
-//     marginBottom: '1.5rem',
-//     cursor: 'move',
-//     float: 'left',
-// }
-
-/**
- * Your Component
- */
-export default function CardComponent() {
-
-    const type = ItemTypes.CARD_COMPONENT;
-
+export default function CardComponent({ preview }) {
     const styles = {
         card: {
             width: 200,
-            height: 200
+            height: 200,
+            cursor: 'move',
+            lineHeight: 'normal'
+        },
+        cardHeaderText: {
+            fontFamily: 'Arial',
+            fontSize: 16,
+            fontWeight: 'bold',
+            lineHeight: 1.5
+        },
+        cardBodyText: {
+            fontFamily: 'Arial',
+            fontSize: 50,
+            position: 'relative',
         }
     };
 
-    const [{ isDragging, }, drag] = useDrag(() => ({
-        type: ItemTypes.CARD_COMPONENT,
-        item: (monitor) => {
-            return {
-                xOffset: monitor.getInitialClientOffset().x - monitor.getInitialSourceClientOffset().x,
-                yOffset: monitor.getInitialClientOffset().y - monitor.getInitialSourceClientOffset().y,
-                position: monitor.getClientOffset()
-            }
-        },
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult();
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-            handlerId: monitor.getHandlerId(),
-        }),
-    }))
-
-    const opacity = isDragging ? 0.4 : 1
     return (
-        <div ref={drag} className="card text-center" style={styles.card}>
+        <div
+            className="card"
+            style={styles.card}
+            role={preview ? 'CardComponentPreview' : 'CardComponent'}
+        >
             <div className="card-header bg-primary text-white">
-                <h6 className="m-0"
-                    style={{
-                        fontFamily: 'Arial',
-                        fontSize: 16,
-                        fontWeight: 'bold'
-                    }}>
+                <h6 className="card-title m-0"
+                    style={styles.cardHeaderText}>
                     Greetings from state:
                 </h6>
             </div>
-            <div className="card-body d-flex flex-column align-items-start">
-                <p className="card-text text-dark" style={{
-                    fontSize: '50px'
-                }}>
+            <div className="card-body d-flex flex-column align-items-start position-relative">
+                <p className="card-text" style={styles.cardBodyText}>
                     Hello!
                 </p>
             </div>
