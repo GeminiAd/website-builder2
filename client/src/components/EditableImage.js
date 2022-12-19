@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import { useDrag, useDrop } from 'react-dnd';
+import { ItemTypes } from './ItemTypes'
+
 import ImageUploading from "react-images-uploading";
 import { Resizable } from 'react-resizable';
+import { NativeTypes } from 'react-dnd-html5-backend'
 
 import CloseIcon from '@mui/icons-material/Close';
 
-import env from "react-dotenv";
+// import env from "react-dotenv";
 
 export default function EditableImage({ parentId, id, cards, setCards }) {
     const [iconVisibility, setIconVisibility] = useState(false);
@@ -89,8 +93,6 @@ export default function EditableImage({ parentId, id, cards, setCards }) {
     const handleImageChange = (image) => {
         const img = new Image();
         img.onload = function () {
-            console.log(this.width + 'x' + this.height);
-
             const newCards = [...cards];
             newCards[parentId].bodyStyles[id].data_url = image;
             newCards[parentId].bodyStyles[id].style.height = width * (this.height / this.width);
@@ -100,23 +102,51 @@ export default function EditableImage({ parentId, id, cards, setCards }) {
         img.src = image;
     }
 
-    const onDrop = (e) => {
-        e.preventDefault();
+    // const onDrop = (e) => {
+    //     e.preventDefault();
 
-        console.log(e);
+    //     const file = e.dataTransfer.files[0];
 
-        // handleImageChange(e.target.currentSrc);
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
 
-        const file = e.dataTransfer.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+    //         reader.addEventListener('loadend', () => {
+    //             const src = reader.result;
 
-        reader.addEventListener('loadend', () => {
-            const src = reader.result;
+    //             handleImageChange(src);
+    //         });
+    //     }
+    // }
 
-            handleImageChange(src);
-        });
-    }
+    const [{ canDrop, isOver }, drop] = useDrop(() => ({
+        accept: [
+            ItemTypes.IMAGE_COMPONENT, NativeTypes.FILE
+        ],
+        drop: (item, monitor) => {
+            const itemType = monitor.getItemType();
+            if (itemType === ItemTypes.IMAGE_COMPONENT) {
+                handleImageChange(item.image);
+            } else if (itemType === NativeTypes.FILE) {
+                const file = item.dataTransfer.files[0];
+
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+
+                reader.addEventListener('loadend', () => {
+                    const src = reader.result;
+
+                    handleImageChange(src);
+                });
+            }
+        },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }),
+        [cards, setCards]
+    );
 
     return (
         <div className="my-3">
@@ -128,14 +158,14 @@ export default function EditableImage({ parentId, id, cards, setCards }) {
                 onMouseLeave={onMouseLeave}
                 onMouseOver={onMouseEnter}
                 lockAspectRatio={true}
-            // onMouseOver={onMouseOver}
-            // onMouseLeave={onMouseLeave}
             >
-                <div>
+                <div
+                    ref={drop}
+                >
                     <img
                         src={data_url}
                         style={styles}
-                        onDrop={onDrop}
+                    // onDrop={onDrop}
                     />
                     {iconVisibility && (<CloseIcon
                         sx={{

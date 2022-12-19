@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -15,6 +15,7 @@ export default function Card({ id, cards, setCards, preview }) {
     const [iconVisibility, setIconVisibility] = useState(false);
     const [iconBackground, setIconBackground] = useState(`rgba(0, 0, 0, 0)`);
     const [cursor, setCursor] = useState('move');
+    const cardRef = useRef(null);
 
     const { width, height } = cards[id];
 
@@ -56,12 +57,13 @@ export default function Card({ id, cards, setCards, preview }) {
     }
 
     const onResize = (event, { element, size, handle }) => {
-        const newCards = [...cards];
+        setDimensions(size.width, size.height);
+        // const newCards = [...cards];
 
-        newCards[id].width = size.width;
-        newCards[id].height = size.height;
+        // newCards[id].width = size.width;
+        // newCards[id].height = size.height;
 
-        setCards(newCards);
+        // setCards(newCards);
     };
 
     const onMouseLeave = (e) => {
@@ -85,14 +87,23 @@ export default function Card({ id, cards, setCards, preview }) {
         setIconBackground(`rgba(0, 0, 0, 0)`);
     }
 
+    const setDimensions = (width, height) => {
+        const newCards = [...cards];
+
+        newCards[id].width = width;
+        newCards[id].height = height;
+
+        setCards(newCards);
+    }
+
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ItemTypes.IMAGE_COMPONENT
         ],
         drop: (item, monitor) => {
-            console.log(item);
-            createImage(item);
-            return undefined;
+            if (!monitor.didDrop()) {
+                createImage(item);
+            }
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
@@ -113,6 +124,32 @@ export default function Card({ id, cards, setCards, preview }) {
 
         return false;
     }
+
+    // useEffect(() => {
+    //     const resize_ob = new ResizeObserver(function (entries) {
+    //         let rect = entries[0].contentRect;
+
+    //         let newWidth = rect.width;
+    //         let newHeight = rect.height;
+
+    //         // console.log('Current Width : ' + newWidth);
+    //         // console.log('Current Height : ' + newHeight);
+    //         if (newWidth > width && newHeight > height) {
+    //             setDimensions(newWidth, newHeight);
+    //         } else if (newWidth > width) {
+    //             setDimensions(newWidth, height);
+    //         } else if (newHeight > height) {
+    //             setDimensions(width, newHeight);
+    //         }
+    //     });
+
+    //     const card = document.getElementById(`card-${id}`);
+    //     resize_ob.observe(card);
+
+    //     return () => {
+    //         resize_ob.unobserve(card);
+    //     };
+    // }, []);
 
     const renderChild = (child, index) => {
         if (child.type === ItemTypes.BODY_TEXT) {
@@ -136,6 +173,8 @@ export default function Card({ id, cards, setCards, preview }) {
         }
     }
 
+
+
     return (
         <Resizable
             height={height}
@@ -148,7 +187,9 @@ export default function Card({ id, cards, setCards, preview }) {
             <div ref={drop} style={styles.div}>
                 <div
                     className="card text-center"
+                    id={`card-${id}`}
                     style={styles.card}
+                    ref={cardRef}
                 >
                     {header && (
                         <EditableHeader

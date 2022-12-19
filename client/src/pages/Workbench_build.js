@@ -122,6 +122,14 @@ const WRK = () => {
 		}
 	});
 
+	const [dustbin, setDustbin] = useState({
+		style: {
+			background: {
+				backgroundColor: '#222'
+			}
+		}
+	});
+
 	const [visibilityNav, setVisibilityNav] = useState(false);
 	const [visibilityMain, setVisibilityMain] = useState(false);
 	const [visibilityAside, setVisibilityAside] = useState(false)
@@ -1586,6 +1594,8 @@ const WRK = () => {
 						<Dustbin
 							cards={cards}
 							setCards={setCards}
+							dustbin={dustbin}
+							setDustbin={setDustbin}
 						/>
 						<CustomDragLayer
 							cards={cards}

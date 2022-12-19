@@ -10,19 +10,37 @@ import { useDragDropManager } from 'react-dnd'
 import update from 'immutability-helper'
 import { isITextSourceModel } from '@cloudinary/transformation-builder-sdk/internal/models/ITextSourceModel.js';
 import DraggableCard from './DraggableCard.js';
+import { NativeTypes } from 'react-dnd-html5-backend'
 
-const style = {
-    position: 'relative',
-    height: '100%',
-    width: '100%',
-    color: 'white',
-    // textAlign: 'center',
-    fontSize: '1rem',
-    lineHeight: 'normal',
-    float: 'left',
-}
+export default function Dustbin(props) {
+    const { cards, setCards, dustbin, setDustbin } = props;
 
-export default function Dustbin({ cards, setCards }) {
+    const { style } = dustbin;
+    const { background } = style;
+
+    const styles = {
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        color: 'white',
+        // textAlign: 'center',
+        fontSize: '1rem',
+        lineHeight: 'normal',
+        ...background
+    }
+
+    const handleBackgroundImageChange = (src) => {
+        const newDustbin = { ...dustbin };
+        newDustbin.style.background = {
+            background: `url(${src}) no-repeat center center fixed`,
+            WebkitBackgroundSize: 'cover',
+            MozBackgroundSize: 'cover',
+            OBackgroundSize: 'cover',
+            BackgroundSize: 'cover'
+        };
+
+        setDustbin(newDustbin);
+    }
 
     const createCard = useCallback(
         (item, position) => {
@@ -92,7 +110,8 @@ export default function Dustbin({ cards, setCards }) {
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
         accept: [
             ItemTypes.CARD,
-            ItemTypes.CARD_COMPONENT
+            ItemTypes.CARD_COMPONENT,
+            NativeTypes.FILE
         ],
         drop: (item, monitor) => {
             if (monitor.getItemType() === ItemTypes.CARD) {
@@ -110,6 +129,19 @@ export default function Dustbin({ cards, setCards }) {
                 createCard(item, position);
 
                 return undefined;
+            } else if (monitor.getItemType() === NativeTypes.FILE) {
+                if (!monitor.didDrop()) {
+                    const file = item.dataTransfer.files[0];
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+
+                    reader.addEventListener('loadend', () => {
+                        const src = reader.result;
+
+                        handleBackgroundImageChange(src);
+                    });
+                }
             }
         },
         collect: (monitor) => ({
@@ -120,18 +152,12 @@ export default function Dustbin({ cards, setCards }) {
         [cards, setCards]
     )
 
-    // const isActive = canDrop && isOver
-    const backgroundColor = '#222'
-    // if (isActive) {
-    //     backgroundColor = 'darkgreen'
-    // } else if (canDrop) {
-    //     backgroundColor = 'darkkhaki'
-    // }
     return (
         <div
             id='dustbin'
             ref={drop}
-            style={{ ...style, backgroundColor }}
+            style={{ ...styles }}
+            // onDrop={onDrop}
             data-testid="dustbin">
             <div id="renderNavDiv"></div>
             <div id="renderBodyDiv"></div>

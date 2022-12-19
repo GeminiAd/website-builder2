@@ -90,6 +90,20 @@ export default function DraggableImageComponent(props) {
         inputRef.current.click(e);
     };
 
+    const onDrop = (e) => {
+        e.preventDefault();
+
+        const file = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.addEventListener('loadend', () => {
+            const src = reader.result;
+
+            handleImageChange(src);
+        });
+    }
+
     return (
         <div className="my-3">
             {image ?
@@ -99,12 +113,18 @@ export default function DraggableImageComponent(props) {
                     role="DraggableImageComponent"
                     onClick={imageSelect}
                 >
-                    <ImageComponent imageRef={imageRef} components={components} setComponents={setComponents} />
+                    <ImageComponent
+                        imageRef={imageRef}
+                        components={components}
+                        setComponents={setComponents}
+                        onDrop={onDrop}
+                    />
                 </div >
                 :
                 <button
                     onClick={imageSelect}
                     style={{ ...styles.button }}
+                    onDrop={onDrop}
                 >
                     Click or Drop here
                 </button>
