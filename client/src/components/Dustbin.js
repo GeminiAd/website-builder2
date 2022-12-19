@@ -16,7 +16,7 @@ const style = {
     height: '100%',
     width: '100%',
     color: 'white',
-    textAlign: 'center',
+    // textAlign: 'center',
     fontSize: '1rem',
     lineHeight: 'normal',
     float: 'left',
@@ -29,8 +29,6 @@ export default function Dustbin({ cards, setCards }) {
             const newCards = [...cards];
             const headerOffset = document.querySelector('header').offsetHeight;
             const sidebarOffset = document.getElementById('sidebar').offsetWidth;
-
-            console.log(sidebarOffset);
 
             newCards.push({
                 left: position.x - (sidebarOffset + item.xOffset),

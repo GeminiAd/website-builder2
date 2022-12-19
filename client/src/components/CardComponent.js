@@ -25,14 +25,14 @@ export default function CardComponent({ preview }) {
 
     return (
         <div
-            className="card"
+            className="card text-center"
             style={styles.card}
             role={preview ? 'CardComponentPreview' : 'CardComponent'}
         >
             <div className="card-header bg-primary text-white">
                 <h6 className="card-title m-0"
                     style={styles.cardHeaderText}>
-                    Greetings from state:
+                    Greetings from state!
                 </h6>
             </div>
             <div className="card-body d-flex flex-column align-items-start position-relative">

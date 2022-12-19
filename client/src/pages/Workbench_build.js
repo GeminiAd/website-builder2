@@ -18,7 +18,7 @@ import "../styles/Workbench_build.css";
 
 import { PopoverPicker } from "../components/PopoverPicker";
 import DraggableCardComponent from '../components/DraggableCardComponent';
-import ImageComponent from '../components/ImageComponent';
+import DraggableImageComponent from '../components/DraggableImageComponent';
 import Dustbin from '../components/Dustbin';
 import { ItemTypes } from '../components/ItemTypes';
 import { CustomDragLayer } from '../components/CustomDragLayer';
@@ -115,6 +115,12 @@ const WRK = () => {
 			]
 		}
 	]);
+
+	const [components, setComponents] = useState({
+		imageComponent: {
+			image: null
+		}
+	});
 
 	const [visibilityNav, setVisibilityNav] = useState(false);
 	const [visibilityMain, setVisibilityMain] = useState(false);
@@ -1089,7 +1095,7 @@ const WRK = () => {
 							{visibilityComp ? (
 								<div style={flair.componentBar} className="inner-container">
 									<DraggableCardComponent />
-									<ImageComponent />
+									<DraggableImageComponent components={components} setComponents={setComponents} />
 								</div>
 							) : (
 								<div></div>
@@ -1584,6 +1590,8 @@ const WRK = () => {
 						<CustomDragLayer
 							cards={cards}
 							setCards={setCards}
+							components={components}
+							setComponents={setComponents}
 						/>
 					</main>
 				</div>

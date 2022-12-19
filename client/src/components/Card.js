@@ -38,10 +38,10 @@ export default function Card({ id, cards, setCards, preview }) {
         const newCards = [...cards];
         newCards[id].bodyStyles.push({
             type: ItemTypes.IMAGE,
-            ...item.image,
+            data_url: item.image,
             style: {
                 width: 100,
-                height: 66.66
+                height: item.height
             }
         });
 
@@ -69,6 +69,11 @@ export default function Card({ id, cards, setCards, preview }) {
     }
 
     const onMouseOver = (e) => {
+        if (pointerOverIcon(e.clientX, e.clientY)) {
+            setCursor('pointer');
+        } else {
+            setCursor('move');
+        }
         setIconVisibility(true);
     };
 
@@ -85,6 +90,7 @@ export default function Card({ id, cards, setCards, preview }) {
             ItemTypes.IMAGE_COMPONENT
         ],
         drop: (item, monitor) => {
+            console.log(item);
             createImage(item);
             return undefined;
         },
@@ -95,6 +101,18 @@ export default function Card({ id, cards, setCards, preview }) {
     }),
         [cards, setCards]
     );
+
+    const pointerOverIcon = (x, y) => {
+        const elements = document.elementsFromPoint(x, y);
+
+        for (const element of elements) {
+            if (element.classList.value.includes('MuiSvgIcon-root')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     const renderChild = (child, index) => {
         if (child.type === ItemTypes.BODY_TEXT) {

@@ -4,101 +4,40 @@ import { ItemTypes } from './ItemTypes'
 
 import ImageUploading from "react-images-uploading";
 
+import testImage from './test/test-image.jpg';
+
 import '../styles/ImageComponent.css';
 
 export default function ImageComponent(props) {
-    const [image, setImage] = React.useState(null);
-    const [imageVisibility, setImageVisibility] = useState(false);
+    const { components, setComponents, imageRef } = props;
+    const { imageComponent: { image } } = components;
 
-    const imageRef = useRef(null);
+    const handleImageChange = (image) => {
+        const newComponents = { ...components };
+        newComponents.imageComponent.image = image;
 
-    const onChange = (imageList, addUpdateIndex) => {
-        setImage(imageList[0]);
-        setImageVisibility(true);
-    };
+        setComponents(newComponents);
+    }
 
-    const styles = {
-        button: {
-            width: 100,
-            height: 66.66,
-            margin: '10px 0'
-        }
-    };
+    const onDrop = (e) => {
+        e.preventDefault();
 
-    // useEffect(() => {
-    //     if (image) {
-    //         const imageElement = <img ref={imageRef} src={image.data_url} alt="" width="100" />;
-    //         console.log(imageRef.current);
-    //     }
-    // }, [image]);
+        const file = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
 
-    const [{ isDragging, }, drag] = useDrag(() => ({
-        type: ItemTypes.IMAGE_COMPONENT,
-        item: (monitor) => {
-            return {
-                image,
-                xOffset: monitor.getInitialClientOffset().x - monitor.getInitialSourceClientOffset().x,
-                yOffset: monitor.getInitialClientOffset().y - monitor.getInitialSourceClientOffset().y,
-                position: monitor.getClientOffset()
-            }
-        },
-        end: (item, monitor) => {
-            const dropResult = monitor.getDropResult();
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-            handlerId: monitor.getHandlerId(),
-        }),
-    }), [image, setImage]
-    );
+        reader.addEventListener('loadend', () => {
+            const src = reader.result;
+
+            handleImageChange(src);
+        });
+    }
 
     return (
-        <ImageUploading
-            // multiple
-            value={[image]}
-            onChange={onChange}
-            maxNumber={2}
-            dataURLKey="data_url"
-            acceptType={["jpg"]}
+        <div
+            onDrop={onDrop}
         >
-            {({
-                imageList,
-                onImageUpload,
-                onImageRemoveAll,
-                onImageUpdate,
-                onImageRemove,
-                isDragging,
-                dragProps
-            }) => (
-                // write your building UI
-                <div className="upload__image-wrapper">
-                    {imageVisibility ?
-                        <div ref={drag} style={{ width: 'fit-content' }}>
-                            <div
-                                key={0}
-                                className="image-item"
-                                {...dragProps}
-                                style={{
-                                    backgroundImage: `url(${image.data_url})`,
-                                    backgroundSize: 'contain',
-                                    width: 100,
-                                    height: 66.6
-                                }}
-                            >
-                                {/* <img src={image.data_url} alt="" width="100" /> */}
-                            </div>
-                        </div>
-                        :
-                        <button
-                            style={{ ...styles.button }}
-                            onClick={onImageUpload}
-                            {...dragProps}
-                        >
-                            Click or Drop here
-                        </button>
-                    }
-                </div>
-            )}
-        </ImageUploading>
+            <img ref={imageRef} src={image} alt="" width="100" />
+        </div>
     );
 }
