@@ -1,12 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useDrag } from 'react-dnd'
-import { ItemTypes } from './ItemTypes'
+import React, { useRef, useState, useEffect } from 'react';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from './ItemTypes';
 
-import ImageUploading from "react-images-uploading";
-
-import testImage from './test/test-image.jpg';
-
-import '../styles/ImageComponent.css';
+import '../../styles/ImageComponent.css';
 
 export default function ImageComponent(props) {
     const { components, setComponents, imageRef, onDrop } = props;

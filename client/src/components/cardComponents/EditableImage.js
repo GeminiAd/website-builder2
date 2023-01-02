@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-
 import { useDrag, useDrop } from 'react-dnd';
-import { ItemTypes } from './ItemTypes'
-
-import ImageUploading from "react-images-uploading";
+import { ItemTypes } from './ItemTypes';
 import { Resizable } from 'react-resizable';
 import { NativeTypes } from 'react-dnd-html5-backend'
-
 import CloseIcon from '@mui/icons-material/Close';
-
-// import env from "react-dotenv";
 
 export default function EditableImage({ parentId, id, cards, setCards }) {
     const [iconVisibility, setIconVisibility] = useState(false);

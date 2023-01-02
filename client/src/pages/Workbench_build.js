@@ -1,41 +1,16 @@
 import React, { useState, Component, useEffect } from "react";
-// import React from 'react';
-// import uploadImage from "../../../server/utils/images";
-import { Cloudinary } from '@cloudinary/url-gen';
-import Save from '../components/Save_wrk';
-import { AdvancedImage } from '@cloudinary/react';
-import { CloudinaryImage } from "@cloudinary/url-gen";
-import { URLConfig } from "@cloudinary/url-gen";
-import { CloudConfig } from "@cloudinary/url-gen";
-
-import { thumbnail } from "@cloudinary/url-gen/actions/resize";
-import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
-import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
-import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { scale } from '@cloudinary/transformation-builder-sdk/actions/resize';
-
+import Save from '../components/asideComponents/Save_wrk';
 import "../styles/Workbench_build.css";
-
-import { PopoverPicker } from "../components/PopoverPicker";
-import DraggableCardComponent from '../components/DraggableCardComponent';
-import DraggableImageComponent from '../components/DraggableImageComponent';
-import Dustbin from '../components/Dustbin';
-import { ItemTypes } from '../components/ItemTypes';
-import { CustomDragLayer } from '../components/CustomDragLayer';
-
+import { PopoverPicker } from "../components/asideComponents/PopoverPicker";
+import DraggableCardComponent from '../components/cardComponents/DraggableCardComponent';
+import DraggableImageComponent from '../components/cardComponents/DraggableImageComponent';
+import Dustbin from '../components/cardComponents/Dustbin';
+import { ItemTypes } from '../components/cardComponents/ItemTypes';
+import { CustomDragLayer } from '../components/cardComponents/CustomDragLayer';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-// var cl = new cloudinary.Cloudinary({cloud_name: "dokk84fdh", secure: true});
-// cloudinary.uploader().upload(new File("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"),
-//   ObjectUtils.asMap("public_id", "olympic_flag"));
-// cloudinary.imageTag('sneaker.png', {crop: "scale", width: 150 }).toHtml();
 
-
-import UploadWidget from "../components/UploadWidget";
-
-import { uploadImage, getAssetInfo, createImageTag } from '../utils/images'
-import { Position } from "@cloudinary/transformation-builder-sdk/qualifiers";
 let codeCompileArr = [];
 const flair = {
 	addNavBarSizing: {
@@ -52,25 +27,9 @@ const flair = {
 	componentBar: {
 		minHeight: 200
 	}
-	// templateWrapper: {
-	// 	padding: "10px",
-	// 	backgroundColor: 'blue'
-	// },
 };
 
 const WRK = () => {
-
-	// TODO: add back in for page authorization
-	// const token = Auth.loggedIn() ? Auth.getToken() : null;
-	// 			if (!token) {
-	// 			  return false;
-	// 			}
-
-	const cld = new Cloudinary({
-		cloud: {
-			cloudName: 'dkc5agj8u'
-		}
-	});
 
 	const [cards, setCards] = useState([
 		{
@@ -157,13 +116,6 @@ const WRK = () => {
 	const [comp, setComp] = useState("Add Components");
 	const [Footer, setFooter] = useState("Add Footer Section");
 
-	const [visibilityUpload, setVisibilityUpload] = useState(false);
-	const [visibilityUpload2, setVisibilityUpload2] = useState(false);
-	const [visibilityUpload3, setVisibilityUpload3] = useState(false);
-	const [visibilityUpload4, setVisibilityUpload4] = useState(false);
-
-
-
 	const [color, setColor] = useState("#aabbcc");
 	const [colorAside, setColorAside] = useState("#aabbcc");
 	const [colorAsideGrad, setColorAsideGrad] = useState("#aabbcc");
@@ -193,7 +145,6 @@ const WRK = () => {
 		const dustbin = document.getElementById('dustbin');
 
 		function handleResize() {
-			// console.log('resized to: ', window.innerWidth, 'x', window.innerHeight)
 			setDustbinDimensions({
 				width: dustbin.offsetWidth,
 				height: dustbin.offsetHeight
@@ -339,88 +290,6 @@ const WRK = () => {
 			document.getElementById("footerGrad").innerHTML = "No";
 		}
 	};
-	//footerGrad
-	const [imageName, setImageName] = useState("");
-	const handleImageName = (e) => {
-		let imgname = e.target.value
-		setImageName(imgname)
-		console.log(imageName)
-	};
-
-	const [imageName2, setImageName2] = useState("");
-	const handleImageName2 = (e) => {
-		let imgname2 = e.target.value
-		setImageName2(imgname2)
-		console.log(imageName2, "img2")
-	};
-
-	const [imageName3, setImageName3] = useState("");
-	const handleImageName3 = (e) => {
-		let imgname3 = e.target.value
-		setImageName3(imgname3)
-		console.log(imageName3, "img3")
-	};
-
-	const [imageName4, setImageName4] = useState("");
-	const handleImageName4 = (e) => {
-		let imgname4 = e.target.value
-		setImageName4(imgname4)
-		console.log(imageName4, "img4")
-	};
-
-	const [navImgLink, setNavImgLink] = useState("")
-	const [mainImgLink, setMainImgLink] = useState("")
-	const [bodyImgLink, setBodyImgLink] = useState("")
-	const [footerImgLink, setFooterImgLink] = useState("")
-
-	const [imageSubmitVisibility, setImageSubmitVisibility] = useState(true)
-	const [imageSubmitVisibility2, setImageSubmitVisibility2] = useState(true)
-	const [imageSubmitVisibility3, setImageSubmitVisibility3] = useState(true)
-	const [imageSubmitVisibility4, setImageSubmitVisibility4] = useState(true)
-
-	const imageSubmit = (e) => {
-		e.preventDefault();
-		let inputVal = document.getElementById('imgName').value
-		let regEx = "^[a-zA-Z0-9_ ]*$"
-		if (inputVal.match(regEx)) {
-			setVisibilityUpload(true);
-			setImageSubmitVisibility(false)
-			setNavImgLink('https://res.cloudinary.com/dkc5agj8u/image/upload/' + encodeURIComponent(imageName.trim()) + '.png')
-		} else { alert("Invalid name, please use alphanumeric characters.") }
-	};
-
-	const imageSubmit2 = (e) => {
-		e.preventDefault();
-		let inputVal2 = document.getElementById('imgName2').value
-		let regEx = "^[a-zA-Z0-9_ ]*$"
-		if (inputVal2.match(regEx)) {
-			setVisibilityUpload2(true);
-			setImageSubmitVisibility2(false)
-			setMainImgLink('https://res.cloudinary.com/dkc5agj8u/image/upload/' + encodeURIComponent(imageName2.trim()) + '.png')
-		} else { alert("Invalid name, please use alphanumeric characters.") }
-	};
-
-	const imageSubmit3 = (e) => {
-		e.preventDefault();
-		let inputVal3 = document.getElementById('imgName3').value
-		let regEx = "^[a-zA-Z0-9_ ]*$"
-		if (inputVal3.match(regEx)) {
-			setVisibilityUpload3(true);
-			setImageSubmitVisibility3(false)
-			setBodyImgLink('https://res.cloudinary.com/dkc5agj8u/image/upload/' + encodeURIComponent(imageName3.trim()) + '.png')
-		} else { alert("Invalid name, please use alphanumeric characters.") }
-	};
-
-	const imageSubmit4 = (e) => {
-		e.preventDefault();
-		let inputVal4 = document.getElementById('imgName4').value
-		let regEx = "^[a-zA-Z0-9_ ]*$"
-		if (inputVal4.match(regEx)) {
-			setVisibilityUpload4(true);
-			setImageSubmitVisibility4(false)
-			setFooterImgLink('https://res.cloudinary.com/dkc5agj8u/image/upload/' + encodeURIComponent(imageName4.trim()) + '.png')
-		} else { alert("Invalid name, please use alphanumeric characters.") }
-	};
 
 	const navRender = () => {
 		let navObj = -1
@@ -511,14 +380,6 @@ const WRK = () => {
 			}
 		}
 		e.preventDefault();
-		setVisibilityUpload(false);
-		setImageSubmitVisibility(true);
-		// let navImgBtn = document.getElementById('imageBtn');
-
-		// navImgBtn.text("Try Another Image");
-
-		// if (!clickedBtn.getAttribute('count'))
-		//render object
 		let fontTitle = document.getElementsByName('fontTitle');
 		let titleFontVal
 		for (let i = 0; i < fontTitle.length; i++) {
@@ -550,8 +411,6 @@ const WRK = () => {
 			navDir: navDirVal,
 			fontTitle: titleFontVal,
 			fontNavLinks: navFontVal,
-			navImgLink: navImgLink,
-			navImgPubId: imageName,
 			navTitleColor: colorNavTitle,
 			navLinksColor: colorNavLinks
 		};
@@ -574,16 +433,7 @@ const WRK = () => {
 			}
 		}
 		e.preventDefault();
-		setVisibilityUpload2(false);
-		setVisibilityUpload3(false);
-		setImageSubmitVisibility2(true);
-		setImageSubmitVisibility3(true);
-		// let navImgBtn = document.getElementById('imageBtn');
 		let mainSubmitBtn = document.getElementById('mainBtn');
-		// navImgBtn.text("Try Another Image");
-
-		// if (!clickedBtn.getAttribute('count'))
-		//render object
 		let fontMainHeaders = document.getElementsByName('fontMainHeaders');
 		let fontMainHeadersVal
 		for (let i = 0; i < fontMainHeaders.length; i++) {
@@ -625,10 +475,6 @@ const WRK = () => {
 			colorMainBackground: colorMainBackground,
 			fontMainHeadersVal: fontMainHeadersVal,
 			fontMainTextVal: fontMainTextVal,
-			bodyBackgroundImagePubID: imageName3,
-			mainImagePubID: imageName2,
-			bodyImgLink: bodyImgLink,
-			mainImgLink: mainImgLink,
 			colorMain: colorMainBackground,
 			colorMainHeaders: colorMainHeaders,
 			mainTextColor: colorMainText
@@ -746,14 +592,7 @@ const WRK = () => {
 			}
 		}
 		e.preventDefault();
-		setVisibilityUpload4(false);
-		setImageSubmitVisibility4(true);
-		// let navImgBtn = document.getElementById('imageBtn');
 		let footerSubmitBtn = document.getElementById('footerBtn');
-		// navImgBtn.text("Try Another Image");
-
-		// if (!clickedBtn.getAttribute('count'))
-		//render object
 		let fontFooter = document.getElementsByName('fontFooter');
 		let footerFontVal
 		for (let i = 0; i < fontFooter.length; i++) {
@@ -785,8 +624,6 @@ const WRK = () => {
 			footerLinksDir: footerLinkDirVal,
 			fontFooter: footerFontVal,
 			fontFooterLinks: footerLinkFontVal,
-			footerImgLink: footerImgLink,
-			footerImgPubId: imageName4,
 			footerFontColor: colorFooterText,
 			footerLinksColor: colorFooterLinks
 		};
@@ -874,8 +711,6 @@ const WRK = () => {
 				links.append(footerLink);
 			}
 
-			// let navImage = uploadImage(image, )	
-
 			footerSubmitBtn.textContent = "Update Footer Settings";
 
 			footer.append(bottomText);
@@ -884,8 +719,6 @@ const WRK = () => {
 			renderFooterDiv.appendChild(footer);
 		}
 	};
-
-	// console.log(dustbinDimensions);
 
 	return (
 		<React.Fragment>
@@ -1000,27 +833,6 @@ const WRK = () => {
 											<label className="labelText">Select Title Color: </label>
 											{<PopoverPicker color={colorNavTitle} onChange={setColor1} />}
 										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Add profile image/logo:
-											{imageSubmitVisibility ? (
-												<button
-													className="btn btn-primary col-9 labelText"
-													id="imageBtn"
-													onClick={imageSubmit}
-												>
-													Submit / Update Image
-												</button>
-											) : <div></div>}
-											{visibilityUpload ? (
-												<UploadWidget imageName={imageName} />
-											) : <div></div>}
-										</label>
-										<input className="col-6" type="text" id="imgName" onKeyUp={handleImageName} placeholder="img name here"></input>
 									</div>
 
 									<hr className="navBenchBreak"></hr>
@@ -1220,27 +1032,6 @@ const WRK = () => {
 
 									<hr className="navBenchBreak"></hr>
 
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Add Background Image for entire page:
-											{imageSubmitVisibility3 ? (
-												<button
-													className="btn btn-primary col-9 labelText"
-													id="imageBtn3"
-													onClick={imageSubmit3}
-												>
-													Submit / Update Image
-												</button>
-											) : <div></div>}
-											{visibilityUpload3 ? (
-												<UploadWidget imageName={imageName3} />
-											) : <div></div>}
-										</label>
-										<input className="col-6" type="text" id="imgName3" onKeyUp={handleImageName3} placeholder="img name here"></input>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
 									<div className="row">
 										<div className="d-flex justify-content-between">
 											<label className="labelText">Select background color: </label>
@@ -1311,27 +1102,6 @@ const WRK = () => {
 											<label className="labelText">Select Main Headers Color: </label>
 											{<PopoverPicker color={colorMainHeaders} onChange={setColor4} />}
 										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Add Image to main:
-											{imageSubmitVisibility2 ? (
-												<button
-													className="btn btn-primary col-9 labelText"
-													id="imageBtn2"
-													onClick={imageSubmit2}
-												>
-													Submit / Update Image
-												</button>
-											) : <div></div>}
-											{visibilityUpload2 ? (
-												<UploadWidget imageName={imageName2} />
-											) : <div></div>}
-										</label>
-										<input className="col-6" type="text" id="imgName2" onKeyUp={handleImageName2} placeholder="img name here"></input>
 									</div>
 
 									<hr className="navBenchBreak"></hr>
@@ -1494,27 +1264,6 @@ const WRK = () => {
 											<label className="labelText">Select Bottom Text Color: </label>
 											{<PopoverPicker color={colorFooterText} onChange={setColor9} />}
 										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Add Image for Footer:
-											{imageSubmitVisibility4 ? (
-												<button
-													className="btn btn-primary col-9 labelText"
-													id="imageBtn4"
-													onClick={imageSubmit4}
-												>
-													Submit / Update Image
-												</button>
-											) : <div></div>}
-											{visibilityUpload4 ? (
-												<UploadWidget imageName={imageName4} />
-											) : <div></div>}
-										</label>
-										<input className="col-6" type="text" id="imgName4" onKeyUp={handleImageName4} placeholder="img name here"></input>
 									</div>
 
 									<hr className="navBenchBreak"></hr>

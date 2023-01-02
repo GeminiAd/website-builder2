@@ -1,9 +1,6 @@
-import { left } from '@cloudinary/transformation-builder-sdk/qualifiers/textAlignment';
 import React, { useEffect, useState, useRef } from 'react';
-
 import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend';
-
 import ImageComponent from './ImageComponent';
 import { ItemTypes } from './ItemTypes';
 

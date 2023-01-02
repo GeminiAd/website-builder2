@@ -1,14 +1,9 @@
 import { useDrop } from 'react-dnd'
 import { ItemTypes } from './ItemTypes.js'
-
 import React, { useState, useRef, useCallback } from 'react';
-
 import Card from './Card';
 import EditableHeader from './EditableHeader'
-
 import { useDragDropManager } from 'react-dnd'
-import update from 'immutability-helper'
-import { isITextSourceModel } from '@cloudinary/transformation-builder-sdk/internal/models/ITextSourceModel.js';
 import DraggableCard from './DraggableCard.js';
 import { NativeTypes } from 'react-dnd-html5-backend'
 

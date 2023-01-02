@@ -3,7 +3,7 @@ import { createUser } from '../utils/api';
 import Auth from '../utils/auth';
 import '.././styles/SignupLogin.css';
 import loginImg from '../asset/Images/loginBackground.jpg';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
 const Signup = () => {

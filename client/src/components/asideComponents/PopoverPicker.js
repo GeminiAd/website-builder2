@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { HexColorPicker, RgbaColorPicker } from "react-colorful";
 
-import useClickOutside from "./ClickOutside";
+import useClickOutside from "../cardComponents/ClickOutside";
 
 
 

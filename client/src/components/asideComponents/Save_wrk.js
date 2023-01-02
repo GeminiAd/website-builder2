@@ -1,6 +1,6 @@
 import React from "react";
-import { saveContent } from '../utils/api';
-import Auth from "../utils/auth";
+import { saveContent } from '../../utils/api';
+import Auth from "../../utils/auth";
 
 const save = ({ myProp, cards, dustbinDimensions }) => {
     const saveCont = async (e) => {

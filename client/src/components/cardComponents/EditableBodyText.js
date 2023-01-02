@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-import '../styles/EditableBodyText.css'
+import '../../styles/EditableBodyText.css'
 
 /* Material UI Icon */
 import EditIcon from '@mui/icons-material/Edit';
@@ -17,7 +17,7 @@ import Slider from '@mui/material/Slider';
 import { HexColorPicker, RgbaColorPicker } from "react-colorful";
 import useClickOutside from "./ClickOutside";
 
-import fonts from './Fonts';
+import fonts from '../../utils/FontsOptions';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

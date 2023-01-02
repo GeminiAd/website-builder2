@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-import '../styles/EditableBody.css'
+import '../../styles/EditableBody.css'
 
 import EditIcon from '@mui/icons-material/Edit';
 import Menu from '@mui/material/Menu';

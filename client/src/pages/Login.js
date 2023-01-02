@@ -4,7 +4,7 @@ import Auth from '../utils/auth';
 import loginImg from '../asset/Images/loginBackground.jpg';
 import { Link } from 'react-router-dom';
 import '../styles/SignupLogin.css';
-import Footer from './Footer';
+import Footer from '../components/Footer';
 
 const Login = () => {
 	const [userFormData, setUserFormData] = useState({
