@@ -63,14 +63,14 @@ export default function DraggableEditableBodyText(props) {
                 return
             }
             // Time to actually perform the action
-            moveBodyText(dragIndex, dragIndex)
+            moveBodyText(dragIndex, hoverIndex)
             // Note: we're mutating the monitor item here!
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
             // to avoid expensive index searches.
             item.index = hoverIndex;
         },
-    })
+    }, [cards, setCards])
 
     const [{ isDragging }, drag, preview] = useDrag(() => ({
         type: ItemTypes.BODY_TEXT,
@@ -89,7 +89,7 @@ export default function DraggableEditableBodyText(props) {
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
-    }), [index]);
+    }), [index, cards, setCards]);
 
     useEffect(() => {
         preview(getEmptyImage(), { captureDraggingState: true })
@@ -99,10 +99,10 @@ export default function DraggableEditableBodyText(props) {
 
     const opacity = isDragging ? 0 : 1;
 
-    if (isDragging) {
-        console.log(`ID: ${id}, index: ${index}, opacity: ${opacity}`);
-        console.log(cards[parentId].bodyStyles[index]);
-    }
+    // if (isDragging) {
+    //     console.log(`ID: ${id}, index: ${index}, opacity: ${opacity}`);
+    //     console.log(cards[parentId].bodyStyles[index]);
+    // }
 
     return (
         <div

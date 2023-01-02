@@ -75,6 +75,7 @@ export default function Dustbin(props) {
                 },
                 bodyStyles: [
                     {
+                        id: 1,
                         text: "Hello!",
                         type: ItemTypes.BODY_TEXT,
                         style: {

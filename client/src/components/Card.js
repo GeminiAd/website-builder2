@@ -183,7 +183,7 @@ export default function Card({ id, cards, setCards, preview }) {
         } else {
             return null;
         }
-    }, [])
+    }, [cards, setCards])
 
     return (
         <Resizable
