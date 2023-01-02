@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -8,7 +8,7 @@ import { Resizable } from 'react-resizable';
 
 import EditableHeader from './EditableHeader';
 import EditableBody from './EditableBody';
-import EditableBodyText from './EditableBodyText'
+import DraggableEditableBodyText from './DraggableEditableBodyText'
 import EditableImage from './EditableImage';
 
 export default function Card({ id, cards, setCards, preview }) {
@@ -55,6 +55,16 @@ export default function Card({ id, cards, setCards, preview }) {
 
         setCards(newCards);
     }
+
+    const moveBodyText = useCallback((dragIndex, hoverIndex) => {
+        const newCards = [...cards];
+        const { bodyStyles } = newCards[id];
+        const dragged = { ...bodyStyles[dragIndex] };
+        newCards[id].bodyStyles.splice(dragIndex, 1);
+        newCards[id].bodyStyles.splice(hoverIndex, 0, dragged);
+
+        setCards(newCards);
+    }, []);
 
     const onResize = (event, { element, size, handle }) => {
         setDimensions(size.width, size.height);
@@ -151,12 +161,14 @@ export default function Card({ id, cards, setCards, preview }) {
     //     };
     // }, []);
 
-    const renderChild = (child, index) => {
+    const renderChild = useCallback((child, index) => {
         if (child.type === ItemTypes.BODY_TEXT) {
-            return <EditableBodyText
-                id={index}
-                key={index}
+            return <DraggableEditableBodyText
+                id={child.id}
+                key={child.id}
+                index={index}
                 parentId={id}
+                moveBodyText={moveBodyText}
                 cards={cards}
                 setCards={setCards}
             />;
@@ -171,9 +183,7 @@ export default function Card({ id, cards, setCards, preview }) {
         } else {
             return null;
         }
-    }
-
-
+    }, [])
 
     return (
         <Resizable

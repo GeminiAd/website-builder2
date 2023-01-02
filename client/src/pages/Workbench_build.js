@@ -100,7 +100,22 @@ const WRK = () => {
 			},
 			bodyStyles: [
 				{
+					id: 1,
 					text: "Hello!",
+					type: ItemTypes.BODY_TEXT,
+					style: {
+						fontSize: 50,
+						color: {
+							r: 0,
+							g: 0,
+							b: 0
+						},
+						fontFamily: 'Arial'
+					}
+				},
+				{
+					id: 2,
+					text: "TEST!",
 					type: ItemTypes.BODY_TEXT,
 					style: {
 						fontSize: 50,

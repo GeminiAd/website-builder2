@@ -19,8 +19,6 @@ export default function EditableImage({ parentId, id, cards, setCards }) {
 
     const { data_url, style: { width, height } } = image;
 
-    // const { width, height } = image.style;
-
     const styles = {
         // margin: '.5em 0px',
         width: width,

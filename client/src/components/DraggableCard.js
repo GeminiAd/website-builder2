@@ -54,7 +54,7 @@ export default function DraggableCard(props) {
     }, []);
 
     const onMouseOver = (e) => {
-        canDrag.current = !e.target.matches('.react-resizable-handle');
+        canDrag.current = !e.target.matches('.react-resizable-handle') && !e.target.matches('.editable-body-text');
     };
 
     return (

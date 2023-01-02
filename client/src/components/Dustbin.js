@@ -32,11 +32,11 @@ export default function Dustbin(props) {
     const handleBackgroundImageChange = (src) => {
         const newDustbin = { ...dustbin };
         newDustbin.style.background = {
-            background: `url(${src}) no-repeat center center fixed`,
+            background: `url(${src}) no-repeat center/cover fixed`,
             WebkitBackgroundSize: 'cover',
             MozBackgroundSize: 'cover',
             OBackgroundSize: 'cover',
-            BackgroundSize: 'cover'
+            // backgroundSize: 'cover'
         };
 
         setDustbin(newDustbin);

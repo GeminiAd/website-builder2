@@ -30,7 +30,7 @@ const MenuProps = {
     },
 };
 
-export default function EditableBodyText({ id, cards, setCards, parentId }) {
+export default function EditableBodyText({ id, cards, setCards, parentId, index }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [opacity, setOpacity] = useState(1);
@@ -55,7 +55,7 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
     const closeFontSelector = useCallback(() => setEditFont(false), []);
     useClickOutside(fontSelector, closeFontSelector);
 
-    const { text, style: { fontFamily, fontSize, color: { r, g, b } } } = cards[parentId].bodyStyles[id];
+    const { text, style: { fontFamily, fontSize, color: { r, g, b } } } = cards[parentId].bodyStyles[index];
 
     const styles = {
         fontFamily: fontFamily,
@@ -146,9 +146,9 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
 
     const handleColorChange = ({ r, g, b }) => {
         const newCards = [...cards];
-        newCards[parentId].bodyStyles[id].style.color.r = r;
-        newCards[parentId].bodyStyles[id].style.color.g = g;
-        newCards[parentId].bodyStyles[id].style.color.b = b;
+        newCards[parentId].bodyStyles[index].style.color.r = r;
+        newCards[parentId].bodyStyles[index].style.color.g = g;
+        newCards[parentId].bodyStyles[index].style.color.b = b;
 
         setCards(newCards);
     }
@@ -181,7 +181,7 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
 
     const setText = (text) => {
         const newCards = [...cards];
-        newCards[parentId].bodyStyles[id].text = text;
+        newCards[parentId].bodyStyles[index].text = text;
 
         setCards(newCards);
     };
@@ -195,7 +195,7 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
     const handleFontChange = (e) => {
         const newCards = [...cards];
 
-        newCards[parentId].bodyStyles[id].style.fontFamily = e.target.value;
+        newCards[parentId].bodyStyles[index].style.fontFamily = e.target.value;
 
         setCards(newCards);
     }
@@ -203,7 +203,7 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
     const handleFontSizeChange = (e) => {
         const newCards = [...cards];
 
-        newCards[parentId].bodyStyles[id].style.fontSize = e.target.value;
+        newCards[parentId].bodyStyles[index].style.fontSize = e.target.value;
 
         setCards(newCards);
     }
@@ -224,7 +224,7 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
         handleClose(e);
 
         const newCards = [...cards];
-        newCards[parentId].bodyStyles.splice(id, 1);
+        newCards[parentId].bodyStyles.splice(index, 1);
 
         setCards(newCards);
     }
@@ -376,14 +376,5 @@ export default function EditableBodyText({ id, cards, setCards, parentId }) {
                 </div>
             )} */}
         </>
-        // React.cloneElement(
-        //     html,
-        //     {
-        //         onDrag: onDrag,
-        //         onMouseOver: onMouseOver,
-        //         onMouseOut: onMouseOut,
-        //     },
-        //     [html.props.children]
-        // )
     );
 }

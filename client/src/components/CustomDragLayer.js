@@ -5,6 +5,7 @@ import { ItemTypes } from './ItemTypes.js'
 import CardComponentDragPreview from './CardComponentDragPreview';
 import CardDragPreview from './CardDragPreview'
 import ImageComponentDragPreview from './ImageComponentDragPreview.js';
+import EditableBodyTextDragPreview from './EditableBodyTextDragPreview';
 
 const layerStyles = {
     position: 'fixed',
@@ -52,6 +53,8 @@ export const CustomDragLayer = (props) => {
                 return <CardDragPreview id={item.id} cards={cards} setCards={setCards} />
             case ItemTypes.IMAGE_COMPONENT:
                 return <ImageComponentDragPreview components={components} setComponents={setComponents} />
+            case ItemTypes.BODY_TEXT:
+                return <EditableBodyTextDragPreview id={item.id} index={item.index} parentId={item.parentId} cards={cards} setCards={setCards} />
             default:
                 return null
         }
