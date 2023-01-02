@@ -418,12 +418,7 @@ const WRK = () => {
 		console.log(codeCompileArr);
 		let renderNavDiv = document.getElementById("renderNavDiv");
 		renderNavDiv.innerHTML = "";
-
-		//add gradiant here
-		//render page
 		navRender()
-
-
 	};
 
 	const mainSubmit = async (e) => {
