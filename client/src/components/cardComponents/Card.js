@@ -64,7 +64,7 @@ export default function Card({ id, cards, setCards, preview }) {
         newCards[id].bodyStyles.splice(hoverIndex, 0, dragged);
 
         setCards(newCards);
-    }, []);
+    }, [cards, setCards]);
 
     const onResize = (event, { element, size, handle }) => {
         setDimensions(size.width, size.height);
