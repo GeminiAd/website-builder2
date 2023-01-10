@@ -1,15 +1,15 @@
-import React, { useState, Component, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Save from '../components/asideComponents/Save_wrk';
 import "../styles/Workbench_build.css";
 import { PopoverPicker } from "../components/asideComponents/PopoverPicker";
-import DraggableCardComponent from '../components/cardComponents/DraggableCardComponent';
-import DraggableImageComponent from '../components/cardComponents/DraggableImageComponent';
-import Dustbin from '../components/cardComponents/Dustbin';
-import { ItemTypes } from '../components/cardComponents/ItemTypes';
-import { CustomDragLayer } from '../components/cardComponents/CustomDragLayer';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-
+import DraggableCardComponent from '../components/projectCardComponents/DraggableCardComponent';
+import DraggableImageComponent from '../components/projectCardComponents/DraggableImageComponent';
+import Dustbin from '../components/Dustbin';
+import { CustomDragLayer } from '../components/projectCardComponents/CustomDragLayer';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import cardObj from '../utils/cardObj';
+import AsideQuestions from "../components/asideComponents/AsideQuestions";
 
 let codeCompileArr = [];
 const flair = {
@@ -31,71 +31,12 @@ const flair = {
 
 const WRK = () => {
 
-	const [cards, setCards] = useState([
-		{
-			top: 20,
-			left: 20,
-			width: 200,
-			height: 200,
-			header: {
-				text: "Greetings from state!",
-				style: {
-					backgroundColor: {
-						r: 13,
-						g: 110,
-						b: 253
-					},
-					color: 'white',
-					fontFamily: 'Arial',
-					fontSize: 16
-				}
-			},
-			body: {
-				style: {
-					r: 255,
-					g: 255,
-					b: 255
-				}
-			},
-			bodyStyles: [
-				{
-					id: 1,
-					text: "Hello!",
-					type: ItemTypes.BODY_TEXT,
-					style: {
-						fontSize: 50,
-						color: {
-							r: 0,
-							g: 0,
-							b: 0
-						},
-						fontFamily: 'Arial'
-					}
-				},
-				{
-					id: 2,
-					text: "TEST!",
-					type: ItemTypes.BODY_TEXT,
-					style: {
-						fontSize: 50,
-						color: {
-							r: 0,
-							g: 0,
-							b: 0
-						},
-						fontFamily: 'Arial'
-					}
-				}
-			]
-		}
-	]);
-
+	const [cards, setCards] = useState(cardObj());
 	const [components, setComponents] = useState({
 		imageComponent: {
 			image: null
 		}
 	});
-
 	const [dustbin, setDustbin] = useState({
 		style: {
 			background: {
@@ -116,13 +57,9 @@ const WRK = () => {
 	const [comp, setComp] = useState("Add Components");
 	const [Footer, setFooter] = useState("Add Footer Section");
 
-	const [color, setColor] = useState("#aabbcc");
 	const [colorAside, setColorAside] = useState("#aabbcc");
 	const [colorAsideGrad, setColorAsideGrad] = useState("#aabbcc");
 	const [colorFooterGrad, setcolorFooterGrad] = useState("#aabbcc");
-	const [colorGrad, setColorGrad] = useState("#aabbcc");
-	const [colorNavTitle, setColor1] = useState("#aabbcc");
-	const [colorNavLinks, setColor2] = useState("#aabbcc");
 	const [colorMainBackground, setColor3] = useState("#aabbcc");
 	const [colorMainHeaders, setColor4] = useState("#aabbcc");
 	const [colorMainText, setColor5] = useState("#aabbcc");
@@ -213,16 +150,6 @@ const WRK = () => {
 		}
 	};
 
-	const navDir = () => {
-		let navDirVal = document.getElementById("navDir").textContent;
-		if (navDirVal === "Right") {
-			document.getElementById("navDir").innerHTML = "Left";
-		}
-		if (navDirVal === "Left") {
-			document.getElementById("navDir").innerHTML = "Right";
-		}
-	};
-
 	const asideVal = () => {
 		let asideVal = document.getElementById("asideVal").textContent;
 		if (asideVal === "No") {
@@ -240,15 +167,6 @@ const WRK = () => {
 		}
 		if (footerDirVal === "Left") {
 			document.getElementById("footerLinkDir").innerHTML = "Right";
-		}
-	};
-	const navgrad = () => {
-		let navGradVal = document.getElementById("navGrad").textContent;
-		if (navGradVal === "No") {
-			document.getElementById("navGrad").innerHTML = "Yes";
-		}
-		if (navGradVal === "Yes") {
-			document.getElementById("navGrad").innerHTML = "No";
 		}
 	};
 
@@ -359,8 +277,7 @@ const WRK = () => {
 				navLink.textContent = navRenderObj.navlinks[0][i];
 				nav.append(navLink);
 			}
-
-			// let navImage = uploadImage(image, )	
+	
 			let renderNavDiv = document.getElementById("renderNavDiv");
 			let navSubmitBtn = document.getElementById('navBtn');
 			navSubmitBtn.textContent = "Update NavBar Settings";
@@ -370,56 +287,6 @@ const WRK = () => {
 			renderNavDiv.appendChild(header);
 		}
 	}
-
-
-
-	const navSubmit = async (e) => {
-		for (let i = 0; i < codeCompileArr.length; i++) {
-			if (codeCompileArr[i].contentTitle === 'navbar') {
-				codeCompileArr.splice(i, 1)
-			}
-		}
-		e.preventDefault();
-		let fontTitle = document.getElementsByName('fontTitle');
-		let titleFontVal
-		for (let i = 0; i < fontTitle.length; i++) {
-			if (fontTitle[i].checked) {
-				titleFontVal = fontTitle[i].value
-			}
-		}
-		let fontNav = document.getElementsByName('fontNav')
-		let navFontVal
-		for (let i = 0; i < fontNav.length; i++) {
-			if (fontNav[i].checked) {
-				navFontVal = fontNav[i].value
-			}
-		}
-
-		let navDirVal = document.getElementById("navDir").textContent;
-		let navColor = color;
-		let navLinksString = document.getElementById("navLinksString").value;
-		let homeTitle = document.getElementById("homeTitle").value;
-		let navLinks = navLinksString.split(",");
-		let NavGradVal = document.getElementById("navGrad").textContent;
-		let temp = {
-			contentTitle: "navbar",
-			gradVal: NavGradVal,
-			navColor: navColor,
-			navgradColor: colorGrad,
-			homeTitle: homeTitle,
-			navlinks: [navLinks],
-			navDir: navDirVal,
-			fontTitle: titleFontVal,
-			fontNavLinks: navFontVal,
-			navTitleColor: colorNavTitle,
-			navLinksColor: colorNavLinks
-		};
-		codeCompileArr.push(temp);
-		console.log(codeCompileArr);
-		let renderNavDiv = document.getElementById("renderNavDiv");
-		renderNavDiv.innerHTML = "";
-		navRender()
-	};
 
 	const mainSubmit = async (e) => {
 		for (let i = 0; i < codeCompileArr.length; i++) {
@@ -747,169 +614,11 @@ const WRK = () => {
 							>
 								{nav}
 							</button>
-							{visibilityNav ? (
-
+							{ visibilityNav ? (
 								<div style={flair.addNavBarColor} className="col-12 inner-container">
-
-									<div className="row">
-
-										<label className="col-7 labelText">"Yes" for gradient, "No" for solid background color: </label>
-										<button className="col-4 btn btn-primary" id="navGrad" onClick={navgrad}>
-											No
-										</button>
-									</div>
-									<div className="d-flex justify-content-between">
-										<label className="labelText">Select background color: </label>
-										{<PopoverPicker color={color} onChange={setColor} />}
-									</div>
-									<div className="d-flex justify-content-between">
-										<label className="labelText">Select background color: </label>
-										{<PopoverPicker color={colorGrad} onChange={setColorGrad} />}
-									</div>
-
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Title of home page
-										</label>
-										<input className="col-6" type="text" id="homeTitle"></input>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row labelText">
-										<p>Select a font for header Title:</p>
-									</div>
-
-									<div className="row">
-										<div className="col-4">
-											<label className="labelText" htmlFor="serif" style={{ fontFamily: 'Serif' }}>Serif
-												<input type="radio" name="fontTitle" value="Serif" style={{ fontFamily: 'Serif' }} />
-											</label>
-											<label className="labelText" htmlFor="comic sans MS" style={{ fontFamily: 'Cursive' }}>Comic Sans
-												<input type="radio" name="fontTitle" value="comic sans MS" style={{ fontFamily: 'Cursive' }} />
-											</label>
-											<label className="labelText" htmlFor="fantasy" style={{ fontFamily: 'Fantasy' }}>Impact
-												<input type="radio" name="fontTitle" value="Fantasy" style={{ fontFamily: 'Fantasy' }} />
-											</label>
-										</div>
-
-										<div className="col-4">
-											<label className="labelText" htmlFor="arial" style={{ fontFamily: 'sans-serif' }}>Arial
-												<input type="radio" name="fontTitle" value="arial" style={{ fontFamily: 'sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor="Courier" style={{ fontFamily: 'monospace' }}>Courier
-												<input type="radio" name="fontTitle" value="Courier" style={{ fontFamily: 'monospace' }} />
-											</label>
-											<label className="labelText" htmlFor="Tahoma" style={{ fontFamily: 'sans-serif' }}>Tahoma
-												<input type="radio" name="fontTitle" value="Tahoma" style={{ fontFamily: 'sans-serif' }} />
-											</label>
-										</div>
-
-										<div className="col-4">
-											<label className="labelText" htmlFor='arial black, sans-serif' style={{ fontFamily: 'arial black, sans-serif' }}>Arial Black
-												<input type="radio" name="fontTitle" value='arial black, sans-serif' style={{ fontFamily: 'arial black, sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor='trebuchet ms, sans-serif' style={{ fontFamily: 'trebuchet ms, sans-serif' }}>Trebuchet MS
-												<input type="radio" name="fontTitle" value='trebuchet ms, sans-serif' style={{ fontFamily: 'trebuchet ms, sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor='verdana, sans-serif' style={{ fontFamily: 'verdana, sans-serif' }}>Verdana
-												<input type="radio" name="fontTitle" value='verdana, sans-serif' style={{ fontFamily: 'verdana, sans-serif' }} />
-											</label>
-										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row">
-										<div className="d-flex justify-content-between">
-											<label className="labelText">Select Title Color: </label>
-											{<PopoverPicker color={colorNavTitle} onChange={setColor1} />}
-										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">
-											Input navLinks <br /> (<i>Separate by ','!</i>):
-										</label>
-										<input className="col-6" type="text" id="navLinksString"></input>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row-12">
-										<label className="col-6 labelText">Anchor nav links left/right: </label>
-										<button className="col-6 btn btn-primary" id="navDir" onClick={navDir}>
-											Right
-										</button>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row labelText">
-										<p>What font would you like to use for your nav links:</p>
-									</div>
-
-									<div className="row">
-										<div className="col-4">
-											<label className="labelText" htmlFor="serif" style={{ fontFamily: 'Serif' }}>Serif
-												<input type="radio" name="fontNav" value="Serif" style={{ fontFamily: 'Serif' }} />
-											</label>
-											<label className="labelText" htmlFor="comic sans MS" style={{ fontFamily: 'Cursive' }}>Comic Sans
-												<input type="radio" name="fontNav" value="comic sans MS" style={{ fontFamily: 'Cursive' }} />
-											</label>
-											<label className="labelText" htmlFor="fantasy" style={{ fontFamily: 'Fantasy' }}>Impact
-												<input type="radio" name="fontNav" value="Fantasy" style={{ fontFamily: 'Fantasy' }} />
-											</label>
-										</div>
-
-										<div className="col-4">
-											<label className="labelText" htmlFor="arial" style={{ fontFamily: 'sans-serif' }}>Arial
-												<input type="radio" name="fontNav" value="arial" style={{ fontFamily: 'sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor="Courier" style={{ fontFamily: 'monospace' }}>Courier
-												<input type="radio" name="fontNav" value="Courier" style={{ fontFamily: 'monospace' }} />
-											</label>
-											<label className="labelText" htmlFor="Tahoma" style={{ fontFamily: 'sans-serif' }}>Tahoma
-												<input type="radio" name="fontNav" value="Tahoma" style={{ fontFamily: 'sans-serif' }} />
-											</label>
-										</div>
-
-										<div className="col-4">
-											<label className="labelText" htmlFor='arial black, sans-serif' style={{ fontFamily: 'arial black, sans-serif' }}>Arial Black
-												<input type="radio" name="fontNav" value='arial black, sans-serif' style={{ fontFamily: 'arial black, sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor='trebuchet ms, sans-serif' style={{ fontFamily: 'trebuchet ms, sans-serif' }}>Trebuchet MS
-												<input type="radio" name="fontNav" value='trebuchet ms, sans-serif' style={{ fontFamily: 'trebuchet ms, sans-serif' }} />
-											</label>
-											<label className="labelText" htmlFor='verdana, sans-serif' style={{ fontFamily: 'verdana, sans-serif' }}>Verdana
-												<input type="radio" name="fontNav" value='verdana, sans-serif' style={{ fontFamily: 'verdana, sans-serif' }} />
-											</label>
-										</div>
-									</div>
-
-									<hr className="navBenchBreak"></hr>
-
-									<div className="row">
-										<div className="d-flex justify-content-between">
-											<label className="labelText">Select NavLink Color: </label>
-											{<PopoverPicker color={colorNavLinks} onChange={setColor2} />}
-										</div>
-									</div>
-
-									<button
-										className="btn btn-primary m-3"
-										id="navBtn"
-										onClick={navSubmit}
-									>
-										Submit Nav Settings
-									</button>
+									<AsideQuestions render = {navRender} codeCompileArr = {codeCompileArr}/>
 								</div>
-							) : (
+							):(
 								<div></div>
 							)}
 

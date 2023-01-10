@@ -2,11 +2,9 @@ import React from 'react';
 import '../styles/Projects.css';
 import {
 	PlusCircle,
-	// Folder2,
-	// HouseAdd,
-	ArrowDownCircle,
+	ArrowDownCircle
 } from 'react-bootstrap-icons';
-// import MultiCarousel from '../components/Carousel';
+
 import { Link } from 'react-router-dom';
 
 const Projects = ({ projects }) => {
@@ -28,24 +26,6 @@ const Projects = ({ projects }) => {
 								New Project
 							</button>
 						</Link>
-						{/* <Link to="/wrk" className="project_link">
-							<button
-								className="btn project-btn d-flex align-items-center"
-								type="button"
-							>
-								<Folder2 color="white" size={18} className="me-2" />
-								Current Projects
-							</button>
-						</Link>
-						<Link to="/wrk" className="project_link">
-							<button
-								className="btn project-btn d-flex align-items-center"
-								type="button"
-							>
-								<HouseAdd color="white" size={18} className="me-2" />
-								Prebuilt Templates
-							</button>
-						</Link> */}
 						<Link to="/export" className="project_link">
 							<button
 								className="btn project-btn d-flex align-items-center"
@@ -57,53 +37,14 @@ const Projects = ({ projects }) => {
 						</Link>
 					</aside>
 					<div className="col-9">
-						{/* <h3 className="mt-3">Templates</h3>
-						<MultiCarousel /> */}
 						<h3 className="mt-3">Current Projects</h3>
 						<div className="container-fluid">
 							<div className="row project_container">
-								{projects.map((project) => (
-									<Link to="/export" className="project_box">
+								{projects.map( (project) => (
+									<Link to= "/export" className= "project_box" >
 										<div >{project.title}</div>
 									</Link>
 								))}
-								{/* <div className="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center">
-									<img
-
-									project.description
-										src="https://via.placeholder.com/200"
-										alt="Placeholder"
-										className="m-3"
-									/>
-								</div>
-								<div className="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center">
-									<img
-										src="https://via.placeholder.com/200"
-										alt="Placeholder"
-										className="m-3"
-									/>
-								</div>
-								<div className="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center">
-									<img
-										src="https://via.placeholder.com/200"
-										alt="Placeholder"
-										className="m-3"
-									/>
-								</div>
-								<div className="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center">
-									<img
-										src="https://via.placeholder.com/200"
-										alt="Placeholder"
-										className="m-3"
-									/>
-								</div>
-								<div className="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center">
-									<img
-										src="https://via.placeholder.com/200"
-										alt="Placeholder"
-										className="m-3"
-									/>
-								</div> */}
 							</div>
 						</div>
 					</div>

@@ -1,6 +1,4 @@
-import React, { useRef } from 'react'
-import { useDrag } from 'react-dnd'
-import { ItemTypes } from './ItemTypes'
+import React from 'react'
 
 export default function CardComponent({ preview }) {
     const styles = {

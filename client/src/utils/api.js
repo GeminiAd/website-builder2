@@ -20,7 +20,7 @@ export const login = (userData) => {
 
 export const saveContent = (userData) => {
 	console.log(userData);
-	return fetch('/api/users/addProject', {
+	return fetch('/api/projects/', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export const saveContent = (userData) => {
 };
 
 export const findAllProjects = (token) => {
-	return fetch(`api/users/findAllProjects/`, {
+	return fetch(`api/projects/`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -39,22 +39,12 @@ export const findAllProjects = (token) => {
 	});
 };
 
-// export const deleteProject = (id, projectId) => {
-//   return fetch(`api/users/deleteProject/${id}`,{
+// export const deleteProject = (projectId, token) => {
+//   return fetch(`api/projects/${projectId}`,{
 //     method: 'DELETE',
 //     headers: {
 //       'Content-Type': 'application/json',
-//       // authorization: `Bearer ${token}`,
-//     },
-//     body: JSON.stringify(projectId),
+//       authorization: `Bearer ${token}`,
+//     }
 //   });
-// };
-
-// export const getMe = (token) => {
-// 	return fetch('/api/users/me', {
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 			authorization: `Bearer ${token}`,
-// 		},
-// 	});
 // };

@@ -9,16 +9,16 @@ export const buildNav = (navSettings) => {
     </li>`
         navLinksContentArr.push(content)
     }
-    if (navSettings.navDir == 'Left') {
+    if (navSettings.navDir === 'Left') {
         navDir = 'start'
     }
-    if (navSettings.navDir == 'Right') {
+    if (navSettings.navDir === 'Right') {
         navDir = 'end'
     }
-    if (navSettings.gradVal == 'Yes') {
+    if (navSettings.gradVal === 'Yes') {
         headBack = ` width: 100%; background-image: linear-gradient(to bottom right,${navSettings.navTitleColor}, ${navSettings.navgradColor});`
     }
-    if (navSettings.gradVal == 'No') {
+    if (navSettings.gradVal === 'No') {
         headBack = ` width: 100%; background-color:${navSettings.navColor}`
     }
     let navContent = navLinksContentArr.join('\n')

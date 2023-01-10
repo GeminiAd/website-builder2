@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Slider from '@mui/material/Slider';
 
-import { HexColorPicker, RgbaColorPicker } from "react-colorful";
+import { RgbaColorPicker } from "react-colorful";
 import useClickOutside from "./ClickOutside";
 
 import fonts from '../../utils/FontsOptions';

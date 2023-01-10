@@ -1,7 +1,7 @@
 import Footer from '../components/Footer';
 import '../styles/Download_build.css';
 import React, { useState } from 'react';
-import CreateProject from '../utils/createUserProject';
+import CreateProject from '../utils/renderProject/createUserProject';
 
 const Download_build = ({projects}) => {
 	const [projectSelected, setProjectSelected] = useState(false);

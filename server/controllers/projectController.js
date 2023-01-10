@@ -1,7 +1,7 @@
 const { User, Build } = require('../models');
 
 module.exports = {
-
+	
 	async addProject({ body }, res) {
 		const userUp = await User.findOneAndUpdate(
 			{ _id: body.userId },
@@ -18,7 +18,7 @@ module.exports = {
 		if (!userUp) {
 			return res.status(400).json({ message: 'wrong credentials!' });
 		}
-		res.json({ message: 'Added Project seccessfully' });
+		res.json({ message: 'Added Project successfully' });
 	},
 
 	async findAllProjects({ user = null, params }, res) {
@@ -35,16 +35,31 @@ module.exports = {
 		}
 		res.json(userData);
 	},
-	async deleteProject(req, res) {
-		const user = await User.findOneAndUpdate(
-			{ _id: req.params.id },
-			{ $pull: { builds: { build: req.params.buildId } } }
-		);
-		if (!user) {
+	
+	async findProject({ body }, res) {
+		const userData = await User.aggregate([
+			{$match: {_id: body.userId}},
+			{$eq:{builds: body.build}}
+		])
+		if (!userData) {
 			return res
 				.status(400)
-				.json({ message: 'unable to delete, please try again' });
+				.json({ message: 'no user found, please try again' });
 		}
-		res.json(user);
-	}
+		res.json(userData);
+	},
+
+	// async deleteProject({user, params}, res) {
+	// 	const user = await User.findOneAndUpdate(
+	// 		{ _id: user._id },
+	// 		{ $pull: { builds: { _id: params.projectId } } },
+	// 		{new: true}
+	// 	);
+	// 	if (!user) {
+	// 		return res
+	// 			.status(400)
+	// 			.json({ message: 'unable to delete, please try again'});
+	// 	}
+	// 	res.json(user);
+	// }
 };
