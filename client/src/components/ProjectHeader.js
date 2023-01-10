@@ -14,7 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import { HexColorPicker, RgbaColorPicker } from "react-colorful";
-import useClickOutside from "./cardComponents/ClickOutside";
+import useClickOutside from "./projectCardComponents/ClickOutside";
 
 import ProjectTitle from './ProjectTitle';
 import ProjectLinks from './ProjectLinks';

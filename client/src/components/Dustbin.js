@@ -1,14 +1,15 @@
 import { useDrop } from 'react-dnd'
-import { ItemTypes } from './ItemTypes.js'
+import { ItemTypes } from './projectCardComponents/ItemTypes.js'
 import React, { useState, useRef, useCallback } from 'react';
-import Card from './Card';
-import EditableHeader from './EditableHeader'
+import Card from './projectCardComponents/Card';
+import EditableHeader from './projectCardComponents/EditableHeader'
 import { useDragDropManager } from 'react-dnd'
-import DraggableCard from './DraggableCard.js';
-import { NativeTypes } from 'react-dnd-html5-backend';
+import DraggableCard from './projectCardComponents/DraggableCard.js';
+import { NativeTypes } from 'react-dnd-html5-backend'
+
+import ProjectHeader from './ProjectHeader';
 
 import { nanoid } from 'nanoid';
-import ProjectHeader from '../ProjectHeader.js';
 
 export default function Dustbin(props) {
     const { cards, setCards, dustbin, setDustbin, navVisibility, navBar, setNavBar } = props;
@@ -62,7 +63,7 @@ export default function Dustbin(props) {
                         color: 'white',
                         fontFamily: 'Arial',
                         fontSize: 16,
-                        textAlign: 'center'
+                        justifyContent: 'center'
                     }
                 },
                 body: {

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { createUser } from '../utils/api';
 import Auth from '../utils/auth';
 import '.././styles/SignupLogin.css';
-import loginImg from '../asset/Images/loginBackground.jpg';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 
@@ -71,7 +70,6 @@ const Signup = () => {
 	return (
 		<>
 			<div className="login-signup-section">
-				{/* <img className="img_login" src={loginImg} alt="Buildings in the background."/> */}
 				<div className="container-fluid m-3">
 					<div className="row d-flex justify-content-center card_container m-0">
 						<div className="col-12 col-md-10 col-lg-8 col-xl-6 col-xxl-4 p-0">

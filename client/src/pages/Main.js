@@ -1,9 +1,8 @@
 import React from 'react';
 import '../styles/Main.css';
-import hero from '.././asset/Images/heroImg.jpg';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-//
+
 const Home = () => {
 	return (
 		<>
@@ -19,7 +18,6 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
-				{/* <img className="hero_img" src={hero} alt="" /> */}
 			</section>
 			<Footer />
 		</>

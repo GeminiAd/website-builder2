@@ -1,9 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
-import { HexColorPicker, RgbaColorPicker } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 
-import useClickOutside from "../cardComponents/ClickOutside";
-
-
+import useClickOutside from "../projectCardComponents/ClickOutside";
 
 export const PopoverPicker = ({ color, onChange }) => {
     const popover = useRef();
@@ -13,6 +11,8 @@ export const PopoverPicker = ({ color, onChange }) => {
     useClickOutside(popover, close);
 
     return (
+        <div className="d-flex justify-content-between">
+            <label className="labelText">Select background color: </label>
         <div style={{ position: 'relative', right: '15px' }} className="picker">
             <div
                 className="swatch"
@@ -25,6 +25,7 @@ export const PopoverPicker = ({ color, onChange }) => {
                     <HexColorPicker color={color} onChange={onChange} />
                 </div>
             )}
+        </div>
         </div>
     );
 };

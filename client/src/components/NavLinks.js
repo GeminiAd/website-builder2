@@ -8,7 +8,7 @@ const NavigationLinks = () => {
 		<>
 			<li className="">
 				{Auth.loggedIn() ? (
-					<a className="header_link">
+					<a href= '#' className="header_link">
 						<p id="logout_button" className="nav_link" onClick={Auth.logout}>
 							Logout
 						</p>

@@ -11,22 +11,22 @@ export const buildFooter = (footerSettings) => {
     </li>`
         footerLinksContentArr.push(content)
     }
-    if (footerSettings.footerLinksDir == 'left') {
+    if (footerSettings.footerLinksDir === 'left') {
         FooterDirection = 'start'
     }
-    if (footerSettings.footerLinksDir == 'right') {
+    if (footerSettings.footerLinksDir === 'right') {
         FooterDirection = 'end'
     }
-    if (footerSettings.footerTextDir == 'left') {
+    if (footerSettings.footerTextDir === 'left') {
         FooterTextAlign = 'start'
     }
-    if (footerSettings.footerTextDir == 'right') {
+    if (footerSettings.footerTextDir === 'right') {
         FooterTextAlign = 'end'
     }
-    if (footerSettings.footerGradVal == 'Yes') {
+    if (footerSettings.footerGradVal === 'Yes') {
         footerBackgroundCol = `background-image: linear-gradient(to bottom right,${footerSettings.footerColor}, ${footerSettings.footerColorGrad});`
     }
-    if (footerSettings.footerGradVal == 'No') {
+    if (footerSettings.footerGradVal === 'No') {
         footerBackgroundCol = `background-color:${footerBackgroundCol}`
     }
     let footerContent = footerLinksContentArr.join('')

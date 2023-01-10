@@ -19,7 +19,7 @@ import { Resizable } from 'react-resizable';
 
 import { RgbaColorPicker } from "react-colorful";
 
-import useClickOutside from "./cardComponents/ClickOutside";
+import useClickOutside from "./projectCardComponents/ClickOutside";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
