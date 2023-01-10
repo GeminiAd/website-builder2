@@ -5,10 +5,13 @@ import Card from './Card';
 import EditableHeader from './EditableHeader'
 import { useDragDropManager } from 'react-dnd'
 import DraggableCard from './DraggableCard.js';
-import { NativeTypes } from 'react-dnd-html5-backend'
+import { NativeTypes } from 'react-dnd-html5-backend';
+
+import { nanoid } from 'nanoid';
+import ProjectHeader from '../ProjectHeader.js';
 
 export default function Dustbin(props) {
-    const { cards, setCards, dustbin, setDustbin } = props;
+    const { cards, setCards, dustbin, setDustbin, navVisibility, navBar, setNavBar } = props;
 
     const { style } = dustbin;
     const { background } = style;
@@ -58,7 +61,8 @@ export default function Dustbin(props) {
                         },
                         color: 'white',
                         fontFamily: 'Arial',
-                        fontSize: 16
+                        fontSize: 16,
+                        textAlign: 'center'
                     }
                 },
                 body: {
@@ -70,7 +74,7 @@ export default function Dustbin(props) {
                 },
                 bodyStyles: [
                     {
-                        id: 1,
+                        id: nanoid(),
                         text: "Hello!",
                         type: ItemTypes.BODY_TEXT,
                         style: {
@@ -154,11 +158,17 @@ export default function Dustbin(props) {
             ref={drop}
             style={{ ...styles }}
             // onDrop={onDrop}
-            data-testid="dustbin">
+            data-testid="dustbin"
+        >
             <div id="renderNavDiv"></div>
             <div id="renderBodyDiv"></div>
             <div id="renderFooterDiv"></div>
-            {/* {isActive ? 'Release to drop' : 'Drag a box here'} */}
+            {navVisibility && (
+                <ProjectHeader
+                    navBar={navBar}
+                    setNavBar={setNavBar}
+                />
+            )}
             {cards.map((card, index) =>
                 <DraggableCard
                     key={index}

@@ -10,6 +10,8 @@ import { HexColorPicker, RgbaColorPicker } from "react-colorful";
 import useClickOutside from "./ClickOutside";
 import { ItemTypes } from './ItemTypes';
 
+import { nanoid } from 'nanoid';
+
 export default function EditableBody({ cards, setCards, parentId, children }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -175,6 +177,7 @@ export default function EditableBody({ cards, setCards, parentId, children }) {
         const newCards = [...cards];
         newCards[parentId].bodyStyles.push(
             {
+                id: nanoid(),
                 text: "Hello!",
                 type: ItemTypes.BODY_TEXT,
                 style: {

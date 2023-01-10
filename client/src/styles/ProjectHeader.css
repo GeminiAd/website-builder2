@@ -1,0 +1,7 @@
+.project-header-popover .react-colorful__alpha {
+    display: none !important;
+}
+
+.project-header-popover .react-colorful__hue {
+    border-radius: 0 0 10px 10px;
+}

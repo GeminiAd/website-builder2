@@ -7,9 +7,10 @@ import DraggableImageComponent from '../components/cardComponents/DraggableImage
 import Dustbin from '../components/cardComponents/Dustbin';
 import { ItemTypes } from '../components/cardComponents/ItemTypes';
 import { CustomDragLayer } from '../components/cardComponents/CustomDragLayer';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import { nanoid } from 'nanoid';
 
 let codeCompileArr = [];
 const flair = {
@@ -47,7 +48,8 @@ const WRK = () => {
 					},
 					color: 'white',
 					fontFamily: 'Arial',
-					fontSize: 16
+					fontSize: 16,
+					justifyContent: 'center'
 				}
 			},
 			body: {
@@ -59,7 +61,7 @@ const WRK = () => {
 			},
 			bodyStyles: [
 				{
-					id: 1,
+					id: nanoid(),
 					text: "Hello!",
 					type: ItemTypes.BODY_TEXT,
 					style: {
@@ -73,7 +75,7 @@ const WRK = () => {
 					}
 				},
 				{
-					id: 2,
+					id: nanoid(),
 					text: "TEST!",
 					type: ItemTypes.BODY_TEXT,
 					style: {
@@ -104,11 +106,60 @@ const WRK = () => {
 		}
 	});
 
+	const [navBar, setNavBar] = useState({
+		h1: {
+			text: 'Girth Checker',
+			style: {
+				fontFamily: 'Arial',
+				fontSize: 40,
+				fontWeight: 500,
+				color: {
+					r: 0,
+					g: 0,
+					b: 0
+				}
+			}
+		},
+		navStyle: {
+
+		},
+		navLinks: [
+			{
+				text: 'test1'
+			},
+			{
+				text: 'test2'
+			},
+			{
+				text: 'test3'
+			}
+		],
+		style: {
+			height: 100,
+			background: {
+				backgroundStyle: 'solid',
+				backgroundColor: {
+					r: 255,
+					g: 255,
+					b: 255
+				},
+				rightGradient: {
+					r: 255,
+					g: 255,
+					b: 255
+				}
+			}
+		}
+	});
+
 	const [visibilityNav, setVisibilityNav] = useState(false);
 	const [visibilityMain, setVisibilityMain] = useState(false);
 	const [visibilityAside, setVisibilityAside] = useState(false)
 	const [visibilityComp, setVisibilityComp] = useState(false);
 	const [visibilityFooter, setVisibilityFooter] = useState(false);
+
+	const [navVisibility, setNavVisibility] = useState(false);
+	const [navButtonText, setNavButtonText] = useState("Add Navigation Bar");
 
 	const [nav, setNav] = useState("Add Navigation Bar");
 	const [main, setMain] = useState("Add Main Content Section");
@@ -133,12 +184,19 @@ const WRK = () => {
 
 	const [dustbinDimensions, setDustbinDimensions] = useState({});
 
+	const setProjectHeaderWidth = (width) => {
+		const newNavBar = { ...navBar };
+		newNavBar.style.width = width;
+		setNavBar(newNavBar);
+	};
+
 	useEffect(() => {
 		const dustbin = document.getElementById('dustbin');
 		setDustbinDimensions({
 			width: dustbin.offsetWidth,
 			height: dustbin.offsetHeight
 		})
+		setProjectHeaderWidth(dustbin.offsetWidth);
 	}, []);
 
 	useEffect(() => {
@@ -148,7 +206,8 @@ const WRK = () => {
 			setDustbinDimensions({
 				width: dustbin.offsetWidth,
 				height: dustbin.offsetHeight
-			})
+			});
+			setProjectHeaderWidth(dustbin.offsetWidth);
 		}
 
 		window.addEventListener('resize', handleResize);
@@ -171,6 +230,16 @@ const WRK = () => {
 			setNav("Collapse NavBar Bench");
 		}
 	};
+
+	const toggleNavbar = () => {
+		if (navVisibility) {
+			setNavButtonText('Add Navigation Bar');
+			setNavVisibility(false);
+		} else {
+			setNavButtonText('Remove Navigation Bar');
+			setNavVisibility(true);
+		}
+	}
 
 	const addMain = () => {
 		if (visibilityMain) {
@@ -738,6 +807,13 @@ const WRK = () => {
 									</button>
 								</div>
 							</div>
+							<button
+								className="btn btn-success w-100"
+								type="button"
+								onClick={toggleNavbar}
+							>
+								{navButtonText}
+							</button>
 							<button
 								style={{ color: 'white' }}
 								className="btn dropdown-toggle w-100"
@@ -1355,6 +1431,9 @@ const WRK = () => {
 							setCards={setCards}
 							dustbin={dustbin}
 							setDustbin={setDustbin}
+							navVisibility={navVisibility}
+							navBar={navBar}
+							setNavBar={setNavBar}
 						/>
 						<CustomDragLayer
 							cards={cards}

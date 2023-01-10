@@ -6,6 +6,7 @@ import CardComponentDragPreview from './CardComponentDragPreview';
 import CardDragPreview from './CardDragPreview'
 import ImageComponentDragPreview from './ImageComponentDragPreview.js';
 import EditableBodyTextDragPreview from './EditableBodyTextDragPreview';
+import CardHeaderTextDragPreview from './CardHeaderTextDragPreview';
 
 const layerStyles = {
     position: 'fixed',
@@ -55,6 +56,8 @@ export const CustomDragLayer = (props) => {
                 return <ImageComponentDragPreview components={components} setComponents={setComponents} />
             case ItemTypes.BODY_TEXT:
                 return <EditableBodyTextDragPreview id={item.id} index={item.index} parentId={item.parentId} cards={cards} setCards={setCards} />
+            case ItemTypes.CARD_HEADER_TEXT:
+                return <CardHeaderTextDragPreview parentId={item.parentId} cards={cards} setCards={setCards} />
             default:
                 return null
         }

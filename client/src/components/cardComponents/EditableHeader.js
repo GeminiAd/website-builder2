@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+import { useDrop } from 'react-dnd'
+
+import { ItemTypes } from './ItemTypes';
+
 import EditIcon from '@mui/icons-material/Edit';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -15,6 +19,8 @@ import { HexColorPicker, RgbaColorPicker } from "react-colorful";
 import useClickOutside from "./ClickOutside";
 
 import fonts from '../../utils/FontsOptions'
+
+import DraggableCardHeaderText from './DraggableCardHeaderText';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -58,19 +64,16 @@ export default function EditableHeader({ text, cards, setCards, parentId }) {
     const closeFontSize = React.useCallback(() => setEditSize(false), []);
     useClickOutside(fontSizeSlider, closeFontSize);
 
-    const { backgroundColor: { r: backgroundR, g: backgroundG, b: backgroundB }, color, fontFamily, fontSize } = cards[parentId].header.style;
+    const ref = React.useRef(null);
+
+    const { backgroundColor: { r: backgroundR, g: backgroundG, b: backgroundB }, color, fontFamily, fontSize, justifyContent } = cards[parentId].header.style;
 
     const styles = {
         cardHeader: {
             backgroundColor: `rgba(${backgroundR}, ${backgroundG}, ${backgroundB}, ${opacity})`,
-            color: color,
+            display: 'flex',
+            justifyContent,
         },
-        h: {
-            lineHeight: 1.5,
-            fontFamily,
-            fontSize,
-            fontWeight: 'bold'
-        }
     };
 
     const closeMenu = (e) => {
@@ -250,11 +253,55 @@ export default function EditableHeader({ text, cards, setCards, parentId }) {
         setCards(newCards);
     };
 
+    const setJustification = (justification) => {
+        const newCards = [...cards];
+        newCards[parentId].header.style.justifyContent = justification;
+
+        setCards(newCards);
+    };
+
+    const [{ handlerId }, drop] = useDrop({
+        accept: ItemTypes.CARD_HEADER_TEXT,
+        hover(item, monitor) {
+            if (!ref.current) {
+                return
+            }
+
+            const justification = item.justification;
+
+            const hoverBoundingRect = ref.current.getBoundingClientRect();
+
+            const hoverOneThirdX = (hoverBoundingRect.right - hoverBoundingRect.left) / 3;
+            const hoverTwoThirdsX = 2 * hoverOneThirdX;
+
+            const clientOffset = monitor.getClientOffset();
+
+            const hoverClientX = clientOffset.x - hoverBoundingRect.left;
+
+            if (hoverClientX < hoverOneThirdX && justification !== 'start') {
+                console.log('CHANGE JUSTIFICATION TO START');
+                setJustification('start');
+                item.justification = 'start';
+            } else if (hoverClientX > hoverOneThirdX && hoverClientX < hoverTwoThirdsX && justification !== 'center') {
+                console.log('CHANGE JUSTIFICATION TO CENTER');
+                setJustification('center');
+                item.justification = 'center';
+            } else if (hoverClientX > hoverTwoThirdsX && justification !== 'end') {
+                console.log('CHANGE JUSTIFICATION TO END');
+                setJustification('end');
+                item.justification = 'end';
+            }
+        },
+    }, [cards, setCards]);
+
+    drop(ref);
+
     return (
         <>
             <div
                 className="card-header editable-header"
                 id={`editable-card-header-${parentId}`}
+                ref={ref}
                 style={styles.cardHeader}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
@@ -271,10 +318,17 @@ export default function EditableHeader({ text, cards, setCards, parentId }) {
                         onKeyDown={onKeyDown}
                     />
                     :
-                    <h6
-                        className="card-title m-0"
-                        style={styles.h}
-                    >{text}</h6>
+                    <DraggableCardHeaderText
+                        cards={cards}
+                        setCards={setCards}
+                        parentId={parentId}
+                    />
+                    // <h6
+                    //     className="card-title m-0"
+                    //     style={styles.h}
+                    // >
+                    //     {text}
+                    // </h6>
                 }
             </div>
             {backgroundColorEdit && (

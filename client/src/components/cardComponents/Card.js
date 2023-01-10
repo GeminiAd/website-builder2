@@ -196,7 +196,7 @@ export default function Card({ id, cards, setCards, preview }) {
         >
             <div ref={drop} style={styles.div}>
                 <div
-                    className="card text-center"
+                    className="card"
                     id={`card-${id}`}
                     style={styles.card}
                     ref={cardRef}
